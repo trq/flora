@@ -3,8 +3,7 @@
 Name=Midnight Commander
 Type=Application
 Comment=A visual file manager
-Exec=mc
-Terminal=true
+Exec=gnome-terminal --hide-menubar -e "mc"
 Icon=MidnightCommander
 Categories=GNOME;GTK;Utility;Core;
 

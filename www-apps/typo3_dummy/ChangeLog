@@ -5,7 +5,8 @@
 *typo3_dummy-ALL_VERSIONS (21 Sep 2011)
 
   21 Sep 2011; Marc "Judge" Richter <mailYYYY@marc-richter.info>:
-  This is an ebuild, generated to by used with Funtoo Linux. Since Funtoo uses git to
+  This is an ebuild, generated to be used with Funtoo Linux. Since Funtoo uses git to
   track and submit it's portage tree, I will not write what has changed into git's commit-log
-  *and* an ancient ChangeLog file, which is merely a relict from times where no CVS was available.
+  *and* an ancient ChangeLog file like thit one, which is merely a relict from times where no
+  VCS was available.
   Please find the changelog for this package in the git-log.
