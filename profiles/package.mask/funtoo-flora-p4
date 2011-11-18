@@ -1,0 +1,9 @@
+# Mask file for my experimental and live builds.
+
+# Live SVN build for Font Manager which fixes Red Hat bug #658328. See
+# https://bugzilla.redhat.com/show_bug.cgi?id=658328 for more details.
+=media-gfx/font-manager-9999
+
+# Liberal Crime Squad SVN sources. As of rev. 581 builds okay and appears to be
+# quite stable.
+=games-rpg/lcs-9999
