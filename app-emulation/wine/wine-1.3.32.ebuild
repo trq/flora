@@ -112,7 +112,13 @@ src_unpack() {
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-1.1.15-winegcc.patch #260726
-	epatch "${FILESDIR}"/${PN}-disables-DS3DMODE_NORMAL.patch
+	# Patch which disables "normal" processing mode (DS3DMODE_NORMAL) within direct sound
+	# http://bugs.winehq.org/show_bug.cgi?id=14896
+	epatch "${FILESDIR}"/${PN}-disables-DS3DMODE_NORMAL.patch 
+	# WinePulse – PulseAudio for Wine http://art.ified.ca/?page_id=40
+	#epatch "${FILESDIR}"/${PN}pulse-0.40.patch
+	#epatch "${FILESDIR}"/${PN}pulse-configure.ac-1.3.22.patch
+	#epatch "${FILESDIR}"/${PN}pulse-winecfg-1.3.11.patch
 	epatch_user #282735
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in || die
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
@@ -140,7 +146,7 @@ do_configure() {
 		$(use_with jpeg) \
 		$(use_with ldap) \
 		$(use_with mp3 mpg123) \
-		$(use_with nls gettextpo) \
+		$(use_with nls gettext) \
 		$(use_with openal) \
 		$(use_with opencl) \
 		$(use_with opengl) \
@@ -201,14 +207,13 @@ src_install() {
 		rm "${D}"/usr/bin/{wine{dump,maker},function_grep.pl} "${D}"/usr/share/man/man1/wine{dump,maker}.1 || die
 	fi
 
-    insinto /etc/xdg/menus/applications-merged/
-    doins  "${FILESDIR}/wine.menu" || die "doins failed"
-    insinto /usr/share/desktop-directories/
-    doins  "${FILESDIR}/Wine.directory" || die "doins failed"
-    domenu "${FILESDIR}"/*.desktop || die "domenu failed"
-    insinto /usr/share/pixmaps/
-    doins "${FILESDIR}"/*.svg || die "doins failed"
-
+	insinto /etc/xdg/menus/applications-merged/
+	doins  "${FILESDIR}/wine.menu" || die "doins failed"
+	insinto /usr/share/desktop-directories/
+	doins  "${FILESDIR}/Wine.directory" || die "doins failed"
+	domenu "${FILESDIR}"/*.desktop || die "domenu failed"
+	insinto /usr/share/pixmaps/
+	doins "${FILESDIR}"/*.svg || die "doins failed"
 }
 
 pkg_postinst() {
