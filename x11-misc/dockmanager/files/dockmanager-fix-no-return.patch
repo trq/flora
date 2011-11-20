@@ -1,0 +1,11 @@
+diff -urN a/daemon/dockmanager-daemon.c b/daemon/dockmanager-daemon.c
+--- a/daemon/dockmanager-daemon.c	2011-02-23 21:49:22.709548918 +0000
++++ b/daemon/dockmanager-daemon.c	2011-10-31 14:14:22.547790402 +0000
+@@ -1639,6 +1639,7 @@
+ 		}
+ 		_g_free0 (line);
+ 	}
++        return -1;
+ }
+ 
+ 
