@@ -112,9 +112,7 @@ src_unpack() {
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-1.1.15-winegcc.patch #260726
-	# Patch which disables "normal" processing mode (DS3DMODE_NORMAL) within direct sound
-	# http://bugs.winehq.org/show_bug.cgi?id=14896
-	epatch "${FILESDIR}"/${PN}-disables-DS3DMODE_NORMAL.patch 
+	epatch "${FILESDIR}"/${PN}-disables-DS3DMODE_NORMAL.patch
 	# WinePulse – PulseAudio for Wine http://art.ified.ca/?page_id=40
 	#epatch "${FILESDIR}"/${PN}pulse-0.40.patch
 	#epatch "${FILESDIR}"/${PN}pulse-configure.ac-1.3.22.patch
