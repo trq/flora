@@ -60,5 +60,6 @@ src_install() {
 	webapp_serverowned "${MY_HTDOCSDIR}"/libraries/config.default.php
 
 	webapp_postinst_txt en "${FILESDIR}"/postinstall-en.txt
+	webapp_postupgrade_txt en "${FILESDIR}"/postinstall-en.txt
 	webapp_src_install
 }
