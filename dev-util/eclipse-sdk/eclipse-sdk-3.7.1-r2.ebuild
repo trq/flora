@@ -50,7 +50,7 @@ CDEPEND=">=dev-java/swt-${PV%.0}_rc4:${SLOT}
 	>=dev-java/sat4j-pseudo-2.3.0:2.3
 	dev-java/tomcat-servlet-api:2.5
 	>=www-servers/tomcat-7:7
-	java-virtuals/jetty-server:6
+	>=www-servers/jetty-6
 	x86? ( gnome? ( gnome-base/gconf ) )"
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5"
