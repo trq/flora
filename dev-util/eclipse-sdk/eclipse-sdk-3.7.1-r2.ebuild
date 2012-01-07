@@ -12,18 +12,21 @@ JAVA_PKG_BSFIX="off"
 
 inherit java-pkg-2 java-ant-2 check-reqs
 
-BUILD_VER="3.7.0"
-BUILD_ID="I20110613-1736"
+BUILD_VER="3.7.1"
+BUILD_ID="I20110909-1335"
 BUILD_LABEL="${BUILD_VER}-${BUILD_ID}"
-ECLIPSE_BUILD_VER="5791c48513b4207ab1eec1e00bed4b2186f9aad5"
-S="${WORKDIR}/eclipse-build-${ECLIPSE_BUILD_VER}"
+ECLIPSE_BUILD_VER="9e028fbc74e844e96a6fd944d7d4f68909283a5d"
+S="${WORKDIR}/org.eclipse.linuxtools.eclipse-build-${ECLIPSE_BUILD_VER}/eclipse-build"
 
 DESCRIPTION="Eclipse SDK"
 HOMEPAGE="http://www.eclipse.org/eclipse/"
 BASE_URI="http://download.eclipse.org/technology/linuxtools/eclipse-build/3.7.x_Indigo/"
-SRC_URI="${BASE_URI}eclipse-${BUILD_VER}-src.tar.bz2 ${BASE_URI}eclipse-build-${ECLIPSE_BUILD_VER}.tar.xz"
+SRC_URI="${BASE_URI}eclipse-${BUILD_VER}-src.tar.bz2
+	http://git.eclipse.org/c/linuxtools/org.eclipse.linuxtools.eclipse-build.git/snapshot/org.eclipse.linuxtools.eclipse-build-${ECLIPSE_BUILD_VER}.tar.bz2 -> eclipse-build-${ECLIPSE_BUILD_VER}.tar.bz2"
+#	${BASE_URI}eclipse-build-${ECLIPSE_BUILD_VER}.tar.xz"
 
 LICENSE="EPL-1.0"
+RESTRICT="mirror"
 SLOT="3.7"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc gnome source"
@@ -43,11 +46,11 @@ CDEPEND=">=dev-java/swt-${PV%.0}_rc4:${SLOT}
 	>=dev-java/junit-4.8.2:4
 	>=dev-java/lucene-2.9.1:2.9
 	>=dev-java/lucene-analyzers-2.9.1:2.9
-	>=dev-java/sat4j-core-2.3.0:2
-	>=dev-java/sat4j-pseudo-2.3.0:2
+	>=dev-java/sat4j-core-2.3.0:2.3
+	>=dev-java/sat4j-pseudo-2.3.0:2.3
 	dev-java/tomcat-servlet-api:2.5
-	>=www-servers/jetty-6.1.23:6
-	>=www-servers/tomcat-5.5.17:5.5
+	>=www-servers/tomcat-7:7
+	>=www-servers/jetty-6
 	x86? ( gnome? ( gnome-base/gconf ) )"
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5"
@@ -81,21 +84,30 @@ DEPEND="${CDEPEND}
 OSGI_DEPENDENCIES=(
 	'com.ibm.icu - icu4j-4.4'
 	'com.jcraft.jsch - jsch'
-	'javax.servlet tomcat6-servlet-2.5-api tomcat-servlet-api-2.5 servlet-api'
-	'javax.servlet.jsp tomcat6-jsp-2.1-api tomcat-servlet-api-2.5 jsp-api'
+	'javax.servlet - tomcat-servlet-api-2.5 servlet-api'
+#	'javax.servlet tomcat6-servlet-2.5-api tomcat-servlet-api-2.5 servlet-api'
+	'javax.servlet.jsp - tomcat-servlet-api-2.5 jsp-api'
+#	'javax.servlet.jsp tomcat6-jsp-2.1-api tomcat-servlet-api-2.5 jsp-api'
 	'org.apache.commons.codec commons-codec commons-codec'
 	'org.apache.commons.el apache-commons-el-1.0 commons-el'
-	'org.apache.commons.httpclient jakarta-commons-httpclient-3.1 commons-httpclient-3'
+	'org.apache.commons.httpclient - commons-httpclient-3'
+#	'org.apache.commons.httpclient jakarta-commons-httpclient-3.1 commons-httpclient-3'
 	'org.apache.commons.logging apache-commons-logging commons-logging'
-	'org.apache.jasper - tomcat-5.5 jasper-compiler jasper-runtime'
-	'org.apache.lucene.core lucene lucene-2.9'
-	'org.apache.lucene.analysis lucene-analyzers lucene-analyzers-2.9'
+	'org.apache.jasper - tomcat-7 jasper jasper-el'
+	'org.apache.lucene.core - lucene-2.9'
+#	'org.apache.lucene.core lucene lucene-2.9'
+	'org.apache.lucene.analysis - lucene-analyzers-2.9'
+#	'org.apache.lucene.analysis lucene-analyzers lucene-analyzers-2.9'
 	'org.hamcrest.core - hamcrest-core'
-	'org.mortbay.jetty.server jetty-6.1.26 jetty-6 jetty'
-	'org.mortbay.jetty.util jetty-util-6.1.26 jetty-6 jetty-util'
+	'org.mortbay.jetty.server - jetty-6 jetty'
+#	'org.mortbay.jetty.server jetty-6.1.26 jetty-6 jetty'
+	'org.mortbay.jetty.util - jetty-6 jetty-util'
+#	'org.mortbay.jetty.util jetty-util-6.1.26 jetty-6 jetty-util'
 	'org.objectweb.asm - asm-3'
-	'org.sat4j.core org.sat4j.core sat4j-core-2'
-	'org.sat4j.pb org.sat4j.pb sat4j-pseudo-2'
+	'org.sat4j.core - sat4j-core-2.3'
+#	'org.sat4j.core org.sat4j.core sat4j-core-2.3'
+	'org.sat4j.pb - sat4j-pseudo-2.3'
+#	'org.sat4j.pb org.sat4j.pb sat4j-pseudo-2.3'
 )
 NONOSGI_DEPENDENCIES=(
 	'org.apache.ant ant-antlr'
@@ -127,9 +139,27 @@ ALL_OS='aix hpux linux macosx qnx solaris win32'
 ALL_WS='carbon cocoa gtk motif photon win32 wpf'
 ALL_ARCH='alpha arm ia64 mips mipsel PA_RISC ppc ppc64 s390 s390x sparc sparc64 x86 x86_64'
 
-buildDir="${S}/build/eclipse-${BUILD_LABEL}-src"
+pkg_pretend() {
+	CHECKREQS_MEMORY="1536M"
+	if use doc ; then
+		CHECKREQS_DISK_BUILD="3072M"
+	else
+		CHECKREQS_DISK_BUILD="1536M"
+	fi
+	check-reqs_pkg_pretend
+}
+
+buildDir="${S}/build/eclipse-${BUILD_VER}-src"
 
 pkg_setup() {
+	CHECKREQS_MEMORY="1536M"
+	if use doc ; then
+		CHECKREQS_DISK_BUILD="3072M"
+	else
+		CHECKREQS_DISK_BUILD="1536M"
+	fi
+
+	check-reqs_pkg_setup
 	ws='gtk'
 	if use x86 ; then os='linux' ; arch='x86'
 	elif use amd64 ; then os='linux' ; arch='x86_64'
@@ -144,28 +174,17 @@ pkg_setup() {
 }
 
 src_unpack() {
-	CHECKREQS_MEMORY="1536"
-	if use doc ; then
-		CHECKREQS_DISK_BUILD="3072"
-	else
-		CHECKREQS_DISK_BUILD="1536"
-	fi
-	check_reqs
+	unpack "eclipse-build-${ECLIPSE_BUILD_VER}.tar.bz2"
+	#tar -xpJf "${DISTDIR}/eclipse-build-${ECLIPSE_BUILD_VER}.tar.xz"
+	ln -s "${DISTDIR}/eclipse-${BUILD_VER}-src.tar.bz2" "${S}/eclipse-${BUILD_VER}-src.tar.bz2" || die
 
-	#unpack "eclipse-build-${ECLIPSE_BUILD_VER}.tar.xz"
-	tar -xpJf "${DISTDIR}/eclipse-build-${ECLIPSE_BUILD_VER}.tar.xz"
-	ln -s "${DISTDIR}/eclipse-${BUILD_VER}-src.tar.bz2" "${S}/eclipse-${BUILD_LABEL}-src.tar.bz2" || die
 	cd "${S}"
 	# building with ecj fails for some reason (polluted classpath probably)
 	java-pkg_force-compiler javac
-	#sed -e 's/^\(label\|testsBuildLabel\)=.*$/\1='"${BUILD_LABEL}"'/' \
-	#		-e 's/^buildId=.*$/buildId='"${BUILD_ID}"'/' \
-	#		-i build.properties -i pdebuild.properties || die
+	sed -e 's/^\(label\|testsBuildLabel\)=.*$/\1='"${BUILD_VER}"'/' \
+			-e 's/^buildId=.*$/buildId='"${BUILD_ID}"'/' \
+			-i build.properties -i pdebuild.properties || die
 	eant unpack
-	cp -r "${S}/build/eclipse-${PV}-src/"* "${buildDir}/" || die "Copying sources failed"
-	rm -r "${S}/build/eclipse-${PV}-src" || die "Removing dir failed"
-	ln -s "eclipse-${BUILD_LABEL}-src" "${S}/build/eclipse-${PV}-src" || die "Creating link failed"
-
 }
 
 src_prepare() {
@@ -237,7 +256,6 @@ src_prepare() {
 }
 
 src_compile() {
-	addpredict "/dev/random"
 	ANT_OPTS='-Xmx512M' eant -DbuildArch="${arch}"
 
 	# remove stray symlink
