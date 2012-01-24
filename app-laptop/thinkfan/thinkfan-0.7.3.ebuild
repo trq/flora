@@ -14,7 +14,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND=""
 
 # TODO: kernel checks
 
