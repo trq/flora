@@ -2,9 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
-
-inherit eutils
+EAPI="4"
 
 MY_PN="spotify-client-qt"
 MY_PV="${PV}.gcccc1f5.116"
