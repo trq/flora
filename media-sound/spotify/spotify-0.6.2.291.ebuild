@@ -19,13 +19,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-# media-sound/asoundconf left
-RDEPEND=">=x11-libs/qt-dbus-4.5.0
+DEPEND=">=x11-libs/qt-dbus-4.5.0
 	>=x11-libs/qt-webkit-4.5.0
 	>=x11-libs/qt-core-4.5.0
 	>=x11-libs/qt-gui-4.5.0
 	=dev-libs/openssl-0.9.8s-r1"
-DEPEND="${RDEPEND}"
 
 src_unpack() {
 	unpack ${A} ./data.tar.gz
