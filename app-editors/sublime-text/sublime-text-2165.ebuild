@@ -2,9 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
-
-inherit eutils
+EAPI="4"
 
 MY_PN="Sublime%20Text%202%20Build"
 MY_P="${MY_PN}%20${PV}"
