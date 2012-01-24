@@ -6,6 +6,7 @@ EAPI="4"
 
 MY_PN="Sublime%20Text%202%20Build"
 MY_P="${MY_PN}%20${PV}"
+S="${WORKDIR}/Sublime Text 2"
 
 DESCRIPTION="Sublime Text is a sophisticated text editor for code, html and prose"
 HOMEPAGE="http://www.sublimetext.com"
@@ -23,11 +24,11 @@ src_install() {
   insinto /opt/${PN}
   into /opt/${PN}
   exeinto /opt/${PN}
-  doins -r "Sublime Text 2/lib"
-  doins -r "Sublime Text 2/Pristine Packages"
-  doins "Sublime Text 2/sublime_plugin.py"
-  doins "Sublime Text 2/PackageSetup.py"
-  doexe "Sublime Text 2/sublime_text"
+  doins -r "lib"
+  doins -r "Pristine Packages"
+  doins "sublime_plugin.py"
+  doins "PackageSetup.py"
+  doexe "sublime_text"
   dosym "/opt/${PN}/sublime_text" /usr/bin/subl
   make_desktop_entry "subl" "Sublime Text Editor" "accessories-text-editor" "Application;TextEditor"
 }
