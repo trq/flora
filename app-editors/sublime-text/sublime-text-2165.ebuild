@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="=media-libs/libpng-1.2.46"
+RDEPEND="=media-libs/libpng-1.2.46
+  >=x11-libs/gtk+-2.24.8-r1:2"
 
 src_install() {
   insinto /opt/${PN}
