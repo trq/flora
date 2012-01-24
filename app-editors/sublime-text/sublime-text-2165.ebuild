@@ -4,6 +4,9 @@
 
 EAPI="4"
 
+# needed by make_desktop_entry
+inherit eutils
+
 MY_PN="Sublime%20Text%202%20Build"
 MY_P="${MY_PN}%20${PV}"
 S="${WORKDIR}/Sublime Text 2"
