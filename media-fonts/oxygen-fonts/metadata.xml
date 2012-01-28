@@ -2,12 +2,11 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer>
-		<email>saint0fcloud@gmail.com</email>
-		<name>Cloud</name>
+		<email>ereslibre@kde.org</email>
+		<name>Rafael Fernández López</name>
 	</maintainer>
 	<longdescription lang="en">
-		e4rat ("Ext4 - Reducing Access Times") is a toolset to accelerate 
-		the boot process as well as application startups.
+		Oxygen Fonts created by the KDE Oxygen team to create a smooth, easy to
+		read font as well as pretty.
 	</longdescription>
 </pkgmetadata>
-
