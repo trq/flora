@@ -8,7 +8,7 @@ inherit eutils games
 
 DESCRIPTION="Action/adventure game set in a destructable world made of voxels"
 HOMEPAGE="http://www.lexaloffle.com/voxatron.php"
-SRC_URI="voxatron-linux_${PV}_i386.tar.gz"
+SRC_URI="VoxatronLinux_${PV}_i386.tar.gz"
 
 LICENSE="Voxatron"
 SLOT="0"
