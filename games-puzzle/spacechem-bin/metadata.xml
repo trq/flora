@@ -14,4 +14,7 @@
 		and molecules ultimately travel through on their way to their
 		destinations.
 	</longdescription>
+	<use>
+		<flag name="hib">Enable if game was obtained from Humble Indie Bundle</flag>
+	</use>
 </pkgmetadata>
