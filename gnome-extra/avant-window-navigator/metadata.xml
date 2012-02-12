@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>                                                           
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <herd>desktop-misc</herd>
+  <maintainer>
+    <email>leprosys@gmail.com</email>
+    <name>William Díaz</name>
+  </maintainer>
+  <use>
+    <flag name='gconf'>Enable GConf as configuration backend</flag>
+  </use>
+  <longdescription>
+    Avant Window Navigator (Awn) is a dock-like bar which sits at the
+    bottom of the screen. It has support for launchers, task lists, and
+    third party applets.
+  </longdescription>
+</pkgmetadata>
