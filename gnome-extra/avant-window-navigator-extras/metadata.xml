@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>                                                           
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <herd>desktop-misc</herd>
+  <maintainer>
+    <email>leprosys@gmail.com</email>
+    <name>William Díaz</name>
+  </maintainer>
+  <use>
+    <flag name='gconf'>Enable GConf as configuration backend</flag>
+    <flag name='tomboy'>Enable support for <pkg>app-misc/tomboy</pkg></flag>
+    <flag name='webkit'>Enable support for <pkg>net-libs/webkit-gtk</pkg></flag>
+  </use>
+</pkgmetadata>

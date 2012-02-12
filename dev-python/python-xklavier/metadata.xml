@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>                                                           
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <herd>no-herd</herd>
@@ -6,7 +6,4 @@
     <email>leprosys@gmail.com</email>
     <name>William Díaz</name>
   </maintainer>
-<use>
-  <flag name="gconf">Enable gnome2 gconf support</flag>
-</use>
 </pkgmetadata>
