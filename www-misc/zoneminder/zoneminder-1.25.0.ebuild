@@ -25,7 +25,7 @@ ZM_DEPEND="
 	dev-lang/perl
 	dev-lang/php
 	dev-libs/libpcre
-	dev-perl/Archive-Tar
+	perl-core/Archive-Tar
 	dev-perl/Archive-Zip
 	dev-perl/DBD-mysql
 	dev-perl/DBI
