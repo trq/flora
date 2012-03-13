@@ -5,7 +5,7 @@
 EAPI="3"
 
 MY_PN="spotify-client-qt"
-MY_PV="${PV}.gcccc1f5.116"
+MY_PV="${PV}.gbd39032.58"
 MY_P="${MY_PN}_${MY_PV}"
 
 DESCRIPTION="A proprietary peer-to-peer music streaming desktop application"
