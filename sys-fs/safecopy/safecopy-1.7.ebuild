@@ -1,6 +1,5 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/safecopy/safecopy-1.7.ebuild,v 1.2 2011/05/31 10:22:47 scarabeus Exp $
 
 EAPI=4
 
