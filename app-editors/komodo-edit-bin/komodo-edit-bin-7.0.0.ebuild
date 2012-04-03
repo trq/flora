@@ -37,7 +37,7 @@ src_install() {
 	dodir "${KOMODO_EDIT_INSTALLDIR}"
 
 	"${S}/install.sh" \
-		--install-dir "${D}/${KOMODO_EDIT_INSTALLDIR}" \
+		--install-dir "${D}${KOMODO_EDIT_INSTALLDIR}" \
 		--dest-dir ${KOMODO_EDIT_INSTALLDIR} \
 		--suppress-shortcut || die "original installer script failed"
 
