@@ -45,6 +45,9 @@ src_install() {
 	dosym "./${P}" "/usr/bin/${PN}" ||
 		die "failed dosym Komodo launcher script"
 
+	rm -R "${KOMODO_EDIT_INSTALLDIR}/bin/komodo"
+	dosym "${KOMODO_EDIT_INSTALLDIR}/lib/mozilla/komodo" "${KOMODO_EDIT_INSTALLDIR}/bin/komodo"
+
 	# Most default templates are empty, or near-empty, and can clutter
 	# the new file dialog, so we permit not to install them.
 	use templates || (
