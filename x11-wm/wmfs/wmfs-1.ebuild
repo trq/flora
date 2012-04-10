@@ -3,13 +3,12 @@
 # $Header: $
 
 EAPI=4
-inherit eutils git
+inherit eutils git-2
 
 DESCRIPTION="Windows Manager From Scratch"
 HOMEPAGE="https://www.wmfs.info"
-EGIT_REPO_URI="git://github.com/xorg62/wmfs.git"
-#EGIT_PROJECT="wmfs"
-EGIT_BRANCH="wmfs1"
+EGIT_REPO_URI="git://github.com/golodhrim/wmfs.git"
+EGIT_PROJECT="wmfs"
 SRC_URI=""
 
 LICENSE="BSD"
