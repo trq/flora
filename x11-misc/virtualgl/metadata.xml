@@ -7,6 +7,11 @@
       If you have any issues with Bumblebee on Gentoo, please contact me.
     </description>
     <name>Vadim A. Misbakh-Soloviev</name>
+    <email>thezogg@gmail.com</email>
+    <description>
+     Maintained for Funtoo by Michael K. All credit goes to mva.
+    </description>
+    <name>Michael Ketslah</name>
   </maintainer>
   <longdescription>
     An open source package that gives any Unix or Linux remote display software
