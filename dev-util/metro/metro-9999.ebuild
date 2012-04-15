@@ -13,7 +13,7 @@ EGIT_REPO_URI="git://github.com/funtoo/${PN}.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~x86"
+KEYWORDS=""
 IUSE="+ccache +git threads"
 
 DEPEND=""
