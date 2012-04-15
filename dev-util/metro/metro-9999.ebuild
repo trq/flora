@@ -14,11 +14,10 @@ EGIT_REPO_URI="git://github.com/funtoo/${PN}.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+ccache +git threads"
+IUSE="+ccache +git"
 
 DEPEND=""
 RDEPEND="dev-lang/python
-	threads? ( app-arch/pbzip2 )
 	ccache? ( dev-util/ccache )
 	git? ( dev-vcs/git )"
 
