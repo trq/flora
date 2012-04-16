@@ -1,0 +1,11 @@
+# ChangeLog for x11-misc/tinymount
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*tinymount-9999 (16 Apr 2012)
+*tinymount-0.2.2 (16 Apr 2012)
+
+  16 Apr 2012; Mike Limansky <mike.limansky@gmail.com> +tinymount-0.2.2.ebuild,
+  +tinymount-9999.ebuild:
+  Initial import.
+
