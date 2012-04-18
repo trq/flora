@@ -27,7 +27,11 @@ S="${WORKDIR}/teamviewer${MV}"
 
 pkg_setup() {
 	elog "This ebuild installs the TeamViewer binary and libraries and relies on"
+<<<<<<< HEAD
 	elog "Gentoo's wine package to run the actual program."
+=======
+	elog "Funtoo's wine package to run the actual program."
+>>>>>>> mma/master
 	elog
 	elog "If you encounter any problems, consider running TeamViewer with the"
 	elog "bundled wine package manually."
