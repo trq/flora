@@ -4,16 +4,15 @@
 
 EAPI="4"
 
-inherit autotools git-2 multilib
+inherit base multilib
 
 DESCRIPTION="Service providing elegant and stable means of managing Optimus graphics chipsets"
 HOMEPAGE="https://github.com/Bumblebee-Project/Bumblebee"
-EGIT_REPO_URI="https://github.com/Bumblebee-Project/${PN/bu/Bu}.git"
-SRC_URI=""
+SRC_URI="https://github.com/downloads/Bumblebee-Project/${PN/bu/Bu}/${P/bu/Bu}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-3"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 
 IUSE="+bbswitch video_cards_nouveau video_cards_nvidia"
 
@@ -29,11 +28,6 @@ DEPEND=">=sys-devel/autoconf-2.68
 	x11-libs/libX11
 	dev-libs/libbsd
 	sys-apps/help2man"
-
-src_prepare() {
-	default
-	eautoreconf
-}
 
 src_configure() {
 	use video_cards_nvidia || use video_cards_nouveau \
@@ -57,9 +51,9 @@ src_configure() {
 }
 
 src_install() {
-	use video_cards_nvidia && newconfd "${FILESDIR}"/bumblebee.nvidia-confd bumblebee
-	use video_cards_nouveau && newconfd "${FILESDIR}"/bumblebee.nouveau-confd bumblebee
+	newconfd "${FILESDIR}"/bumblebee.confd bumblebee
 	newinitd "${FILESDIR}"/bumblebee.initd bumblebee
+	newenvd  "${FILESDIR}"/bumblebee.envd 99bumblebee
 	default
 }
 
@@ -71,8 +65,7 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	ewarn "This is *NOT* all! Bumblebee still *NOT* ready to use."
+	ewarn "In order to use Bumblebee, add your user to 'bumblebee' group."
 	ewarn "You may need to setup your /etc/bumblebee/bumblebee.conf!"
 	ewarn "For example, default config suggests you have bbswitch installed."
-	ewarn "Also you should add your user to 'bumblebee' group."
 }
