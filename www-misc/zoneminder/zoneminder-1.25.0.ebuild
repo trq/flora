@@ -1,135 +1,153 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/www-misc/zoneminder/Attic/zoneminder-1.24.2.ebuild,v 1.6 2011/04/04 12:11:35 scarabeus Exp $
 
-inherit eutils autotools depend.php multilib
+EAPI=4
+
+inherit eutils base autotools depend.php depend.apache multilib flag-o-matic
 
 MY_PN="ZoneMinder"
 
-DESCRIPTION="ZoneMinder allows you to capture, analyse, record and monitor video cameras attached to your system."
+DESCRIPTION="ZoneMinder allows you to capture, analyse, record and monitor any cameras attached to your system."
 HOMEPAGE="http://www.zoneminder.com/"
 SRC_URI="http://www.zoneminder.com/downloads/${MY_PN}-${PV}.tar.gz"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="debug ffmpeg X10 daemon cgi"
+KEYWORDS="~amd64 ~x86"
+IUSE="debug ffmpeg mmap"
 SLOT="0"
 
-if use cgi ; then inherit webapp ; fi
-
-MAKEOPTS="${MAKEOPTS} -j1"
-
-ZM_DEPEND="
-	X10? ( dev-perl/X10 )
-	app-admin/webapp-config
+DEPEND="
+	app-admin/sudo
 	dev-lang/perl
-	dev-lang/php
 	dev-libs/libpcre
-	perl-core/Archive-Tar
+	dev-libs/openssl
 	dev-perl/Archive-Zip
+	dev-perl/DateManip
 	dev-perl/DBD-mysql
 	dev-perl/DBI
-	dev-perl/DateManip
 	dev-perl/Device-SerialPort
+	dev-perl/libwww-perl
 	dev-perl/MIME-Lite
 	dev-perl/MIME-tools
 	dev-perl/PHP-Serialization
-	dev-perl/libwww-perl
-	ffmpeg? ( media-video/ffmpeg )
-	media-libs/jpeg
-	media-libs/netpbm
-	net-libs/gnutls
-	perl-core/Module-Load
-	virtual/httpd-cgi
+	virtual/jpeg
 	virtual/perl-Archive-Tar
 	virtual/perl-Getopt-Long
+	virtual/perl-libnet
 	virtual/perl-Module-Load
 	virtual/perl-Sys-Syslog
 	virtual/perl-Time-HiRes
-	virtual/perl-libnet
-	app-admin/sudo
+	mmap? ( dev-perl/Sys-Mmap )
 "
 
-DEPEND="${ZM_DEPEND}"
-RDEPEND="${ZM_DEPEND}"
+RDEPEND="
+	dev-perl/DBD-mysql
+	ffmpeg? ( virtual/ffmpeg )
+	media-libs/netpbm
+"
+# ^ huh? not include DEPEND???
 
-if use cgi ; then
-	need_httpd_cgi
-	need_php_httpd
-fi
+# we cannot use need_httpd_cgi here, since we need to setup permissions for the
+# webserver in global scope (/etc/zm.conf etc), so we hardcode apache here.
+need_apache
+need_php_httpd
 
-S="${WORKDIR}/${MY_PN}-${PV}"
+S=${WORKDIR}/${MY_PN}-${PV}
+
+PATCHES=(
+	"${FILESDIR}"/1.25.0/Makefile.am.patch
+	"${FILESDIR}"/1.25.0/Makefile.am.2.patch
+#	"${FILESDIR}"/1.24.2/db_upgrade_script_location.patch
+)
 
 pkg_setup() {
-	if use cgi ; then
-		webapp_pkg_setup
-		require_php_with_use mysql sockets # instead of has_php
-	fi
-	if use daemon ; then
-		enewgroup zoneminder # new user and group for zoneminder daemons
-		enewuser zoneminder -1 -1 -1 zoneminder
-	fi
+	require_php_with_use mysql sockets apache2
 }
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	# epatch "${FILESDIR}/${P}-rundirdestdir.patch"
+src_prepare() {
+	base_src_prepare
+	eautoreconf
 }
 
-src_compile() {
+src_configure() {
+	append-cxxflags -D__STDC_CONSTANT_MACROS
+
 	local myconf
-	if use mmap ; then
+
+	if use mmap; then
 		myconf="${myconf} --enable-mmap=yes"
 	else
 		myconf="${myconf} --enable-mmap=no"
 	fi
-	myconf="${myconf} --with-libarch=$(get_libdir)"
-	myconf="${myconf} --with-mysql=/usr"
-	myconf="${myconf} $(use_enable debug)"
-	myconf="${myconf} $(use_enable debug crashtrace)"
-	myconf="${myconf} $(use_with ffmpeg ffmpeg /usr)"
-	if use cgi ; then
-		myconf="${myconf} --with-webdir="${MY_HTDOCSDIR}""
-		myconf="${myconf} --with-cgidir="${MY_CGIBINDIR}""
-		myconf="${myconf} --with-webuser=nobody"
-		myconf="${myconf} --with-webgroup=nobody"
+
+	if use debug; then
+		myconf="${myconf} --enable-debug=yes --enable-crashtrace=yes"
+	else
+		myconf="${myconf} --enable-debug=no --enable-crashtrace=no"
 	fi
-	econf $myconf || die "econf failed"
-	emake || die "emake failed"
+
+	ZM_SSL_LIB=openssl econf --with-libarch=$(get_libdir) \
+		--with-mysql=/usr \
+		$(use_with ffmpeg) \
+		--with-webdir="${ROOT}var/www/zoneminder/htdocs" \
+		--with-cgidir="${ROOT}var/www/zoneminder/cgi-bin" \
+		--with-webuser=apache \
+		--with-webgroup=apache \
+		${myconf}
+}
+
+src_compile() {
+	einfo "${PN} does not parallel build... using forcing make -j1..."
+	emake -j1
 }
 
 src_install() {
-	if use cgi ; then
-		webapp_src_preinst
-	fi
-
 	keepdir /var/run/zm
-	keepdir /var/log/${PN}
+	keepdir /var/log/zm
 
-	emake -j1 DESTDIR="${D}" install || die "emake install failed"
+	emake -j1 DESTDIR="${D}" install
 
-	if use daemon ; then
-		newinitd "${FILESDIR}/init.d" zoneminder
-		newconfd "${FILESDIR}/conf.d" zoneminder
-	fi
+	fperms 0640 /etc/zm.conf
 
-	dodoc AUTHORS ChangeLog NEWS TODO
+	fowners apache:apache /var/log/zm
+	fowners apache:apache /var/run/zm
 
-	insinto /etc
-	doins "${FILESDIR}"/zm.conf
+	newinitd "${FILESDIR}"/init.d zoneminder
+	newconfd "${FILESDIR}"/conf.d zoneminder
+
+	dodoc AUTHORS ChangeLog INSTALL NEWS README TODO
 
 	insinto /usr/share/${PN}/db
-	doins "${FILESDIR}"/db/zm_u* "${FILESDIR}/db/zm_create.sql"
+	doins db/zm_u* db/zm_create.sql
+
+	#insinto /etc/apache2/vhosts.d
+	#doins "${FILESDIR}"/10_zoneminder.conf
 
 	for DIR in events images sound; do
-		dodir "${MY_HTDOCSDIR}/${DIR}"
+	    dir /var/www/zoneminder/htdocs/${DIR}
 	done
+}
 
-	if use cgi ; then
-		webapp_postinst_txt en "${FILESDIR}/postinstall-en2.txt"
-		webapp_src_install
-	fi
-
-	fperms 0644 /etc/zm.conf
+pkg_postinst() {
+	elog ""
+	elog "0. If this is a new installation, you will need to create a MySQL database"
+	elog "   for ${PN} to use. (see http://www.gentoo.org/doc/en/mysql-howto.xml)."
+	elog "   Once you completed that you should execute the following:"
+	elog " cd /usr/share/${PN}"
+	elog " mysql -u  -p  < db/zm_create.sql"
+	elog ""
+	elog "1.  Set your database settings in /etc/zm.conf"
+	elog ""
+	elog "2.  Enable PHP in your webserver configuration, enable short_open_tags in php.ini,"
+	elog "    set the time zone in php.ini, and restart/reload the webserver"
+	elog ""
+	elog "3.  Start the ${PN} daemon:"
+	elog "  /etc/init.d/${PN} start"
+	elog ""
+	elog "4. Finally point your browser to http://localhost/${PN}"
+	elog ""
+	elog "If you are upgrading, you will need to run the zmupdate.pl script:"
+	elog " /usr/bin/zmupdate.pl version= [--user= --pass=]"
+	elog ""
 }
