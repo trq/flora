@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>games</herd>
+	<maintainer>
+		<email>ari.malinen@gmail.com</email>
+		<name>Ari Malinen</name>
+	</maintainer>
+	<use>
+		<flag name='angelscript'>Enable angelscript support.</flag>
+		<flag name='irc'>Enable IRC support.</flag>
+	</use>
+	<upstream>
+	</upstream>
+</pkgmetadata>
