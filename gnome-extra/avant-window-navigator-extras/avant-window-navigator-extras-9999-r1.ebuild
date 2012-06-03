@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=4-python
 
 EBZR_REPO_URI="lp:awn-extras"
-PYTHON_DEPEND="2:2.7"
+PYTHON_MULTIPLE_ABIS="1"
+PYTHON_RESTRICTED_ABIS="3.* *-jython"
 
 inherit autotools bzr distutils gnome2 python
 
@@ -15,17 +16,17 @@ SRC_URI=""
 LICENSE="GPL-2 LGPL-2.1 CCPL-Attribution-ShareAlike-3.0"
 
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="gconf gnome tomboy webkit"
 
 COMMON_DEPEND="
 	dev-libs/dbus-glib
-	dev-python/dbus-python
 	>=dev-libs/glib-2.16.0
 	dev-python/librsvg-python
-	dev-python/pycairo
 	dev-python/pygobject:2
 	>=dev-python/pygtk-2.12:2
+	dev-python/dbus-python
+	dev-python/pycairo
 	>=gnome-base/libgtop-2
 	>=x11-libs/gtk+-2.12.0
 	x11-libs/libX11
@@ -40,7 +41,7 @@ COMMON_DEPEND="
 	x11-libs/vte:0
 "
 RDEPEND="${COMMON_DEPEND}
-	dev-python/pyxdg
+	$(python_abi_depend dev-python/pyxdg)
 "
 DEPEND="${COMMON_DEPEND}
 	dev-util/intltool
@@ -50,13 +51,13 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xextproto
 	x11-proto/xproto
 	games-misc/fortune-mod
+	dev-python/python-dateutil
+	dev-python/vobject
 	dev-python/gst-python
 	dev-python/libgtop-python
 	dev-python/notify-python
-	dev-python/gdata
-	dev-python/python-dateutil:python-2
-	dev-python/vobject
-	dev-python/feedparser
+	$(python_abi_depend dev-python/gdata)
+	$(python_abi_depend dev-python/feedparser)
 	dev-python/libwnck-python
 	dev-python/python-xklavier
 	dev-libs/libgweather
