@@ -15,7 +15,7 @@ SRC_URI=""
 LICENSE="GPL-2 LGPL-2.1 CCPL-Attribution-ShareAlike-3.0"
 
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE="doc gconf"
 
 COMMON_DEPEND="
@@ -66,9 +66,12 @@ src_prepare() {
 
 src_configure() {
 	econf VALAC=$(type -p valac-0.12) \
+		  $(use_enable doc gtk-doc) \
 		  $(use_enable gconf schemas-install) \
+		  $(use_with gconf gconf-schema-file-dir=/etc/gconf/schemas) \
 		  --disable-static \
 		  --disable-pymod-checks \
+		  --disable-maintainer-mode \
 		  --enable-extra-version=-gentoo-desktop-effects
 }
 
