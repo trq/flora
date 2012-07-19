@@ -1,10 +1,10 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=4
 
-inherit flag-o-matic
+inherit eutils flag-o-matic
 
 MY_P=${P/_/-}
 
@@ -14,13 +14,14 @@ SRC_URI="http://www.midnight-commander.org/downloads/${MY_P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x86-solaris"
-IUSE="+edit gpm mclib nls samba +slang test X +xdg"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x86-solaris"
+IUSE="+edit gpm mclib nls samba sftp +slang test X +xdg"
 
 RDEPEND=">=dev-libs/glib-2.8:2
 	gpm? ( sys-libs/gpm )
 	kernel_linux? ( sys-fs/e2fsprogs )
 	samba? ( net-fs/samba )
+	sftp? ( net-libs/libssh2 )
 	slang? ( >=sys-libs/slang-2 )
 	!slang? ( sys-libs/ncurses )
 	X? ( x11-libs/libX11
@@ -30,22 +31,25 @@ RDEPEND=">=dev-libs/glib-2.8:2
 		x11-libs/libSM )"
 DEPEND="${RDEPEND}
 	app-arch/xz-utils
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
 	test? ( dev-libs/check )
 	"
 
-S=${WORKDIR}/${MY_P}
+LANGS="az be bg ca cs da de el eo es et eu fi
+fr gl hu ia id it ja ka ko lt lv mn nb nl pl pt_BR
+pt ro ru sk sl sr sv sv_SE ta tr uk vi wa zh_CN zh_TW"
+#LANGS+=" de_CH fi_FI it_IT" # suspicious overlap
+
+for X in ${LANGS} ; do
+	IUSE="${IUSE} linguas_${X}"
+done
 
 src_prepare() {
-	cp "${FILESDIR}"/${P}-missing-do_panel_cd_stub_env.c \
-		tests/src/filemanager/do_panel_cd_stub_env.c || die
-
-	# bug 409107
-	epatch "${FILESDIR}"/"${P}"-mcedit-without-file-param-fix.patch
-	# bug 409365
-	epatch "${FILESDIR}"/"${P}"-fix-existing.patch
+	strip-linguas ${LANGS}
 }
+
+S=${WORKDIR}/${MY_P}
 
 src_configure() {
 	local myscreen=ncurses
@@ -63,6 +67,7 @@ src_configure() {
 		--enable-charset \
 		$(use_with X x) \
 		$(use_enable samba vfs-smb) \
+		$(use_enable sftp vfs-sftp) \
 		$(use_with gpm gpm-mouse) \
 		--with-screen=${myscreen} \
 		$(use_with edit) \
@@ -82,9 +87,9 @@ src_install() {
 	fi
 
 	insinto /usr/share/pixmaps
-	doins "${FILESDIR}"/*.svg || die "doins failed"
+	doins "${FILESDIR}"/icons/*.svg || die "doins pixmaps failed"
 	insinto /usr/share/applications
-	doins "${FILESDIR}"/*.desktop || die "doins failed"
+	doins "${FILESDIR}"/applications/*.desktop || die "domenu *.desktop failed"
 }
 
 pkg_postinst() {
