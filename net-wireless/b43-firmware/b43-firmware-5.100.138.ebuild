@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-wireless/b43-firmware/b43-firmware-4.174.64.19.ebuild,v 1.3 2011/09/03 09:29:55 scarabeus Exp $
+# $Header: $
 
 : ${B43_FIRMWARE_SRC_OBJ:=wl_apsta.o}
 MY_P="broadcom-wl-5.100.138"

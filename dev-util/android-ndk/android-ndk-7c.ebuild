@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/android-ndk/android-ndk-5c.ebuild,v 1.1 2011/06/17 16:53:49 cardoe Exp $
+# $Header: $
 
 EAPI=3
 

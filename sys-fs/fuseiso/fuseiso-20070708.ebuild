@@ -1,6 +1,6 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/fuseiso/fuseiso-20070708.ebuild,v 1.3 2010/05/24 19:01:59 pacho Exp $
+# $Header: $
 
 EAPI=2
 inherit eutils

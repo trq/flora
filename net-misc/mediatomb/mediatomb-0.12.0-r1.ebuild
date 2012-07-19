@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/mediatomb/mediatomb-0.12.0-r1.ebuild,v 1.2 2010/04/04 04:44:20 darkside Exp $
+# $Header: $
 
-EAPI=2
+EAPI="2"
 
 inherit eutils linux-info
 

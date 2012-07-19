@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-cluster/drbd/drbd-8.3.10.ebuild,v 1.3 2011/08/10 16:45:24 hwoarang Exp $
+# $Header: $
 
 EAPI="2"
 

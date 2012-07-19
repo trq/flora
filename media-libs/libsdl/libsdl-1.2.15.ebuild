@@ -1,6 +1,6 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/libsdl/libsdl-1.2.15.ebuild,v 1.6 2012/02/27 06:36:13 jdhore Exp $
+# $Header: $
 
 EAPI=2
 inherit flag-o-matic multilib toolchain-funcs eutils libtool

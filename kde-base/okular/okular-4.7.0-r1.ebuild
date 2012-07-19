@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/okular/okular-4.7.0-s1.ebuild,v 1.1 2011/07/27 14:04:27 alexxy Exp $
+# $Header: $
 
 EAPI=4
 

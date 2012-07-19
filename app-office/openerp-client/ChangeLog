@@ -1,5 +1,5 @@
-# ChangeLog for app-office/openerp-client
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2008-2012 Funtoo Technologies
+# Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
   16 Oct 2011; Yarik <ygorbunov@gmail.com>
@@ -41,4 +41,3 @@
   29 Sep 2009; Yarik <ygorbunov@gmail.com>
   +ChangeLog, openerp-client-5.0.6.ebuild:
   New ebuild for bug #267886.
-
