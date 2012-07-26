@@ -37,10 +37,10 @@ pkg_unpack() {
     linux-info_pkg_setup
     elog "Checkking for ROCCAT support..."
 
-    if !(linux_chkconfig_present HID_ROCCAT); then
-	eerror "You must enable ROCCAT suppot in your kernel."
+    if !(linux_chkconfig_module HID_ROCCAT); then
+	eerror "You must enable ROCCAT support (as module) in your kernel."
 	eerror ""
-	eerror "Device Drivers -> HID support -> Special HID drivers -> Roccat device support"
+	eerror "Device Drivers -> HID support -> Special HID drivers -> Roccat device support = m"
 	eerror ""
 	eerror "roccat-tools will not work without this."
     fi
