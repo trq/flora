@@ -1,4 +1,3 @@
-# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sys-fs/udisks/Attic/udisks-1.97.0-r1.ebuild,v 1.7 2012/06/20 07:18:33 ssuominen dead $
 
