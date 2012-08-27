@@ -1,4 +1,3 @@
-# Copyright 2008-2012 Funtoo Technologies
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,24 +7,22 @@ inherit eutils webapp depend.php
 
 DESCRIPTION="TYPO3 is a free Open Source CMS. This is the source package."
 HOMEPAGE="http://typo3.org/"
-SRC_URI="mirror://sourceforge/typo3/${PN}-4.7.0beta2.tar.gz"
+SRC_URI="mirror://sourceforge/typo3/${PN}-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 IUSE="mysql"
 
 RDEPEND="=www-apps/typo3_dummy-${PV}
-	|| ( >=dev-lang/php-5.3[filter,gd,json,ssl,session,soap,xml,zlib,truetype,zlib,mysql] >=dev-lang/php-5.3[filter,gd,json,ssl,session,soap,xml,zlib,truetype,zlib,mysqli] )
+	|| ( >=dev-lang/php-5.2[filter,gd,json,ssl,session,soap,xml,zlib,truetype,zlib,mysql] >=dev-lang/php-5.2[filter,gd,json,ssl,session,soap,xml,zlib,truetype,zlib,mysqli] )
 	|| ( media-gfx/graphicsmagick[zlib,truetype,tiff,png,jpeg] <=media-gfx/imagemagick-4.2.9[zlib,truetype,tiff,png,jpeg] )
 	dev-libs/libpcre
 	>=dev-db/mysql-5.0"
 
 need_php5_httpd
 
-S=${WORKDIR}/${PN}-4.7.0beta2
-
 pkg_setup() {
-	local optional="curl hash"
+	local optional="truetype zlib"
 	if ! PHPCHECKNODIE="yes" require_php_with_use ${optional} || \
 		! PHPCHECKNODIE="yes" require_php_with_any_use gd gd-external ; then
 		    ewarn
